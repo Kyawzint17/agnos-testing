@@ -8,9 +8,9 @@ export default function PatientForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const allFields = watch();
 
-// REAL-TIME SYNC
+  // REAL-TIME SYNC
   useEffect(() => {
-    // 1. If we already submitted, STOP. Do not send any more updates.
+    // 1. If we are in "Submitted" mode, STOP sending updates.
     if (isSubmitted) return;
 
     const sendUpdate = async () => {
@@ -35,16 +35,22 @@ export default function PatientForm() {
 
     const timeoutId = setTimeout(() => sendUpdate(), 500);
     return () => clearTimeout(timeoutId);
-  }, [allFields, isSubmitted]); // <--- Add isSubmitted here!
+  }, [allFields, isSubmitted]); 
 
   // SUBMIT LOGIC
   const onSubmit = async (data) => {
+    // 1. Lock the local state IMMEDIATELY to prevent "Green Flash" on staff side
+    setIsSubmitted(true); 
+
+    // 2. Send the final "Submitted" signal to Pusher
     await fetch('/api/pusher', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ ...data, status: 'Submitted' }),
     });
-    alert("Application Submitted!");
+
+    // 3. SHOW POP-UP (User clicks OK to continue)
+    alert("Application Submitted Successfully!");
   };
 
   return (
@@ -59,7 +65,14 @@ export default function PatientForm() {
           </span>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
+        {/* onChange={() => setIsSubmitted(false)}
+            This detects when the user starts typing again (to fix a mistake). 
+            It unlocks the form and lets the Staff see "Filling" again.
+        */}
+        <form 
+          onSubmit={handleSubmit(onSubmit)}
+          onChange={() => setIsSubmitted(false)}
+        >
           <div className={styles.formGrid}>
             
             {/* ROW 1: Names */}
@@ -80,15 +93,12 @@ export default function PatientForm() {
               {errors.lastName && <span className={styles.error}>Required</span>}
             </div>
 
-<div className={styles.inputGroup}>
+            <div className={styles.inputGroup}>
               <label className={styles.label}>Date of Birth</label>
               <input 
                 type="date" 
                 {...register("dob", { required: true })} 
                 className={styles.input}
-                
-                // --- THE MAGIC FIX ---
-                // This forces the calendar to pop up when you click the text area
                 onClick={(e) => e.target.showPicker && e.target.showPicker()} 
               />
               {errors.dob && <span className={styles.error}>Required</span>}
@@ -149,18 +159,12 @@ export default function PatientForm() {
 
           </div>
 
-        {/* Hide the button after submission so they can't click it twice */}
-          {!isSubmitted && (
-            <button type="submit" className={styles.submitButton}>
-              Submit Application
-            </button>
-          )}
-
-          {isSubmitted && (
-             <div className="mt-6 text-center text-green-600 font-bold bg-green-50 p-4 rounded border border-green-200">
-               ✅ Application Submitted Successfully
-             </div>
-          )}
+          {/* --- BUTTON LOGIC --- */}
+          {/* Always show button, change text if submitted. No Green Box below. */}
+          <button type="submit" className={styles.submitButton}>
+            {isSubmitted ? "Update Application" : "Submit Application"}
+          </button>
+          
         </form>
       </div>
     </div>
