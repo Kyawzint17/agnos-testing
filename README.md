@@ -48,11 +48,11 @@ A live patient form that instantly sends data to a staff dashboard using **Next.
 * **StaffDashboard:** This component just listens for updates. It updates the screen instantly whenever new data comes in from Pusher.
 
 ### 4. How the Real-Time Works
-1.  **Input:** The patient types a letter.
+1.  **Input:** The patient fill the form and can update.
 2.  **Wait:** The code waits 0.5 seconds (debouncing) so we don't send too many requests.
 3.  **Send:** The data is sent to the API.
 4.  **Broadcast:** The API tells Pusher to send an update.
-5.  **Update:** The Staff page receives the update and changes the text on the screen.
+5.  **Update:** The Staff page receives the update and see the patient's information on the screen.
 
 ---
 
