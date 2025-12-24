@@ -13,7 +13,7 @@ export default function Home() {
       fontFamily: 'sans-serif'
     }}>
       <h1 style={{ marginBottom: '2rem', color: '#334155' }}>
-        Real-Time Patient Intake System
+        Real-Time Patient Input Form and Staff View System.
       </h1>
       
       <div style={{ display: 'flex', gap: '20px' }}>

@@ -1,4 +1,4 @@
-# Real-Time Patient Intake System
+# Real-Time Patient Input Form and Staff View System.
 
 A live patient form that instantly sends data to a staff dashboard using **Next.js**, **TailwindCSS**, and **Pusher**.
 
