@@ -1,0 +1,200 @@
+/* pages/PatientForm.module.css */
+.cardBody {
+  padding: 24px;
+}
+
+/* --- THE FIX: Natural Gap --- */
+.infoRow {
+  display: flex;
+  justify-content: flex-start; /* Keeps items on the left */
+  align-items: baseline;       /* Aligns text perfectly */
+  gap: 30px;                   /* <--- THE FIXED GAP SIZE */
+  
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f8fafc;
+}
+
+.infoRow:last-child {
+  border-bottom: none;
+}
+
+.label {
+  color: #64748b;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  
+  /* Optional: Ensures all values align vertically */
+  min-width: 150px; 
+}
+/* 1. Main Container: responsive padding and alignment */
+.container {
+  min-height: 100vh;
+  background-color: #f0f4f8; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px; /* Keeps safe space on mobile edges */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* 2. The Card: Fluid width with a max limit */
+.card {
+  background-color: #ffffff;
+  width: 100%;
+  max-width: 800px; /* Looks good on Desktop */
+  padding: 40px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border-radius: 12px;
+  border: 1px solid #e1e4e8;
+}
+
+/* 3. Header: Flex wrap added for tiny screens */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* NEW: Prevents overlap on very small phones */
+  gap: 10px;       /* Adds space if they wrap */
+  margin-bottom: 30px;
+  border-bottom: 2px solid #f0f4f8;
+  padding-bottom: 20px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1e3a8a;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.statusBadge {
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  white-space: nowrap; /* Prevents text inside badge from breaking */
+}
+
+.statusConnected {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.statusIdle {
+  background-color: #f3f4f6;
+  color: #6b7280;
+}
+
+/* 4. Grid Layout: Default is Desktop (2 Columns) */
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.fullWidth {
+  grid-column: span 2;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+/* 5. Inputs: Styled for visibility and touch */
+.input {
+  padding: 12px 16px; /* Big touch target for mobile */
+  
+  border: 1px solid #6b7280; /* Visible Darker Gray Border */
+  background-color: #f9fafb; /* Slight Tint to reduce glare */
+  
+  border-radius: 6px;
+  
+  /* CRITICAL FOR MOBILE: 16px prevents iOS from zooming in when clicked */
+  font-size: 16px; 
+  color: #111827;
+  transition: all 0.2s;
+  
+  /* Fixes appearance on some mobile browsers */
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.input::placeholder {
+  color: #9ca3af;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #2563eb; 
+  background-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1); 
+}
+
+/* Fix for Date Picker Icon size */
+.input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  width: 24px;   /* Made slightly bigger for thumb taps */
+  height: 24px;
+  filter: invert(0.4); /* Dark gray icon */
+  margin-right: 5px;
+}
+
+.error {
+  color: #ef4444;
+  font-size: 12px;
+  margin-top: 6px;
+  font-weight: 500;
+}
+
+.submitButton {
+  background-color: #2563eb;
+  color: white;
+  font-weight: 600;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 30px;
+  font-size: 16px;
+  width: 100%; /* Full width is best for mobile */
+  transition: background-color 0.2s;
+  
+  /* Removes tap highlight color on mobile */
+  -webkit-tap-highlight-color: transparent;
+}
+
+.submitButton:hover {
+  background-color: #1d4ed8;
+}
+
+/* --- 6. MOBILE RESPONSIVENESS (The Magic Part) --- */
+@media (max-width: 640px) {
+  .formGrid {
+    grid-template-columns: 1fr; /* Switches to 1 column stack */
+    gap: 16px; /* Slightly tighter gap on mobile */
+  }
+  
+  .fullWidth {
+    grid-column: span 1; /* Address field takes 1 column (full width of screen) */
+  }
+  
+  .card {
+    padding: 24px; /* Less padding to save screen space */
+  }
+  
+  .title {
+    font-size: 20px; /* Slightly smaller title */
+  }
+}
