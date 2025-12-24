@@ -1,39 +1,56 @@
-import { useState } from 'react';
+import Link from 'next/link';
+import styles from '@/styles/Home.module.css'; // or just use inline styles if you prefer
 
-export default function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // You can perform your login logic here
-    // For simplicity, let's just display the entered email and password
-    console.log('Email:', email);
-    console.log('Password:', password);
-  };
-
+export default function Home() {
   return (
-    <div>
-      <h1>Login Page</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email:</label>
-          <input type="email" value={email} onChange={handleEmailChange} />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input type="password" value={password} onChange={handlePasswordChange} />
-        </div>
-        <button type="submit">Login</button>
-      </form>
+    <div style={{
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      background: '#f8fafc',
+      fontFamily: 'sans-serif'
+    }}>
+      <h1 style={{ marginBottom: '2rem', color: '#334155' }}>
+        Real-Time Patient Intake System
+      </h1>
+      
+      <div style={{ display: 'flex', gap: '20px' }}>
+        <Link href="/patient">
+          <button style={{
+            padding: '15px 30px',
+            fontSize: '18px',
+            cursor: 'pointer',
+            backgroundColor: '#3b82f6',
+            color: 'white',
+            border: 'none',
+            borderRadius: '8px',
+            fontWeight: 'bold'
+          }}>
+            Go to Patient Form
+          </button>
+        </Link>
+
+        <Link href="/staff">
+          <button style={{
+            padding: '15px 30px',
+            fontSize: '18px',
+            cursor: 'pointer',
+            backgroundColor: '#10b981',
+            color: 'white',
+            border: 'none',
+            borderRadius: '8px',
+            fontWeight: 'bold'
+          }}>
+            Go to Staff Dashboard
+          </button>
+        </Link>
+      </div>
+      
+      <p style={{ marginTop: '2rem', color: '#64748b' }}>
+        Open these in two separate windows to test real-time sync.
+      </p>
     </div>
   );
 }
